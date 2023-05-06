@@ -7,15 +7,58 @@ const magicBtn = document.querySelector('.js-magic-btn');
  * https://images.pexels.com/photos/1870376/pexels-photo-1870376.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=480
  */
 
-const imageEl = document.querySelector('.hero__image');
-// console.log('imageEl', imageEl);
-imageEl.src =
-  'https://images.pexels.com/photos/1870376/pexels-photo-1870376.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=480';
-imageEl.alt = 'Это новый котик';
 
-const heroTitleEl = document.querySelector('.hero__title');
-// console.log('heroTitleEl', heroTitleEl);
-heroTitleEl.textContent = 'Я сладкий пирожочек!';
+// Атрибуты которые мы задаем в HTML становятся свойствами объектов.
+// На примере ниже, атрибут "src" будет являться свойством объект "img".
+// Как и любому объекту мы можем переопределить значение свойства, в примере "imageEl.src ="
+
+// const imageEl = document.querySelector('.hero__image');
+// // console.log('imageEl', imageEl);
+// imageEl.src =
+//   'https://images.pexels.com/photos/1870376/pexels-photo-1870376.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=480';
+// imageEl.alt = 'Это новый котик';
+
+// Ещё можем сделать так: повесим на объект слушатель событий и при нажатии на кнопку, у нас старая картинка
+// поменяется на новую, т.к.: а сначала мы найдём класс, а потом по классу объекту imageEl.src мы
+// переобределим новое значение. А также атрибуту imageEl.alt присвоится новое значение. Т.е. мы меняем
+// значение для двух атрибутов(src и alt это обязательные атрибуты, ну или alt как помним должен быть заполнен)
+// объекта "img" новые значения.
+
+// magicBtn.addEventListener('click', () => {
+//   const imageEl = document.querySelector('.hero__image');
+//   // console.log('imageEl', imageEl);
+//   imageEl.src =
+//     'https://images.pexels.com/photos/1870376/pexels-photo-1870376.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=480';
+//   imageEl.alt = 'Это новый котик';
+// });
+
+// Большинство полезных атрибутов идут как свойства объектов, которые можно переопределять.
+
+// Т.е.в записи imageEl.alt, imageEl - это объект(тег) img которому мы присвоили название переменной imageEl, а
+// alt это атрибут тега, или свойство объекта imageEl (img). Как только мы присваиваем новое значение
+// HTML перерисуется автоматически.
+
+// Пример:
+// Допустим мы хотим поменять текст заголовка, мы идём в разметку, смотрим какой ему присвоен селектор(в HTML 
+// страничке)
+
+// const heroTitleEl = document.querySelector('.hero__title');
+// // console.log('heroTitleEl', heroTitleEl);
+// heroTitleEl.textContent = 'Я сладкий пирожочек!';
+
+// У текстовых узлов таких как заголовки, абзацы, ссылки, везде есть свойство "textContent", к которому мы можем
+// достучаться и поменять.
+
+// Кстати, когда мы пишем const heroTitleEl = document.querySelector('.hero__title'); мы по сути для
+// того что в скобке, а это селектор, тег присваиваем переменную, к примеру const heroTitleEl. Это получается
+// переменная для какого то узла в DOM по сути это переменная для элемента нашей разметки.Мы нашли наш элемент
+// теперь у него есть название переменной, а далее мы можем работать с его свойствами, атрибутами.Менять,
+// переназначать, удалять, добавлять новые значения, записывать эти действия через функцию, вешать на слушатель
+// событий и т.д.
+
+// "textContent" - используем тогда когда надо подменить текстовый контент между открывающей и закрывающей
+// кавычкой, т.е. "", тега в котором используется текст.
+
 
 /*
  * Атрибуты
@@ -24,14 +67,58 @@ heroTitleEl.textContent = 'Я сладкий пирожочек!';
  * - remove(имя-атрибута)
  * - has(имя-атрибута)
  */
+// Весь вышеперечисленный интерфейс можно протестировать посмотреть результат либо доп. почитать описание.
 
-// console.log(imageEl.getAttribute('src'));
-// console.log(imageEl.src);
-// console.log(imageEl.hasAttribute('src'));
+
+// Не все атрибуты становятся свойствами.Для тех атрибутов, которые выступают как свойства есть интерфейс для
+// работы с атрибутами.
+// К примеру imageEl.getAttribute('src') - эта штука возвращает значение атрибута src у элемента img
+
+
+// console.log(imageEl.getAttribute('src')); // такая запись это интерфейс для работы с абсолютно любым
+// атрибутом, который ты себе придумал
+// console.log(imageEl.src); // такая запись только для тех атрибутов которые являются свойствами объекта.
+// Практически все атрибуты используются как свойства объектов.
+// console.log(imageEl.hasAttribute('src')); // проверяет есть ли у объекта указанный атрибут
 
 /*
  * Data-атрибуты
  */
-const actions = document.querySelectorAll('.js-actions button');
-console.log(actions);
-console.log(actions[2].dataset.action);
+
+// это пользовательский функционал для разработчика, который позволяет любому объекту назначить атрибут (даже
+// если он не обязательный для этого объекта)
+
+// Записываетя просто: сначала "data-" а после произвольный набор символов, к примеру: "data-action"
+  
+  // Пример разметки, где на трех кнопках одинаковый атрибут, но значения атрибута разные:
+    // <div class="actions js-actions">  
+    //   <button type="button" data-action="add" > Создать</button >
+    //   <button type="button" data-action="remove">Удалить</button>
+    //   <button type="button" data-action="edit" data-x="y">Редактировать</button>
+    // </div>
+
+// У нас в < div class="actions js-actions" > описано два класса "actions" и "js-actions". actions - это класс
+// для описания стилей, такие классы использовать в js сильно не желательно т.к.они могут меняться. Для этого
+// в разметке задаем класс специально для js. Называем класс типа так: js-actions, т.е. используем "js-" и на 
+// него опираемся в js.
+    
+    
+// const actions = document.querySelectorAll('.js-actions button');
+// console.log(actions);
+// console.log(actions[2].dataset.action); // возвращает значения атрибута (см. разметку выше "add", "remove", "edit")
+// console.log(actions[2].getAttribute('data-action')); // так тоже можно, но запись длинная и не очень
+// console.log(actions[2].dataset) // dataset работает так: находит атрибут data-action="add", отбрасывает
+// "data-" и заисывает "action" как ключ (или свойство), а "add" как значение этого свойства(ключа).
+
+// На одном узле (элементе) может быть сколько угодно атрибутов, dataset будет их возвращать.
+
+// У инпутов атрибутом является к примеру value
+// Напишем пример, в котором при нажатии на кнопку меняется значение (value) в поле формы (input):
+
+// magicBtn.addEventListener('click', () => {
+//   const inputEl = document.querySelector('.js-input');
+//   console.log(inputEl.value);
+//   inputEl.value = 'Вот то что мы ввели в поле формы';
+// });
+
+// В итоге для текстовых узлов используем свойство "textContent", для инпутов используем свойство "value"
